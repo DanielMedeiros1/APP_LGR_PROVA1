@@ -4,12 +4,19 @@ Disciplina: DCA 3701 - Projeto de Sistemas de Controle
 Autor do site: Daniel Medeiros Soares Carneiro
 """
 
+import os
 import streamlit as st
 import numpy as np
 import sympy as sp
 import matplotlib.pyplot as plt
 import matplotlib
 matplotlib.rcParams["axes.unicode_minus"] = False
+
+# Diretorio base = pasta onde este arquivo app.py esta salvo.
+# Usar caminho absoluto (em vez de "assets/...") evita erros de imagem nao
+# encontrada quando o Streamlit Cloud roda o app com outro diretorio de trabalho.
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+ASSETS_DIR = os.path.join(BASE_DIR, "assets")
 
 # ----------------------------------------------------------------------------------
 # CONFIGURACAO DA PAGINA
@@ -1142,20 +1149,35 @@ with tabs[13]:
         "nas abas anteriores desta ferramenta."
     )
 
+    img1_path = os.path.join(ASSETS_DIR, "tabela_passos_1_10.png")
+    img2_path = os.path.join(ASSETS_DIR, "tabela_passos_11_12.png")
+
     st.markdown("**Passos 1 a 10 — Construção do LGR**")
-    st.image(
-        "assets/tabela_passos_1_10.png",
-        caption="Tabela 2.2 — Passos para a Construção do LGR (itens 1 a 10)",
-        use_container_width=True,
-    )
+    if os.path.exists(img1_path):
+        st.image(
+            img1_path,
+            caption="Tabela 2.2 — Passos para a Construção do LGR (itens 1 a 10)",
+            use_container_width=True,
+        )
+    else:
+        st.error(
+            f"Imagem não encontrada em `{img1_path}`. Verifique se a pasta `assets/` "
+            "com as imagens foi enviada ao repositório, no mesmo diretório do app.py."
+        )
 
     st.markdown("")
     st.markdown("**Passos 11 e 12 — Localizando raízes no LGR**")
-    st.image(
-        "assets/tabela_passos_11_12.png",
-        caption="Tabela 2.4 — Localizando Raízes no LGR (itens 11 e 12)",
-        use_container_width=True,
-    )
+    if os.path.exists(img2_path):
+        st.image(
+            img2_path,
+            caption="Tabela 2.4 — Localizando Raízes no LGR (itens 11 e 12)",
+            use_container_width=True,
+        )
+    else:
+        st.error(
+            f"Imagem não encontrada em `{img2_path}`. Verifique se a pasta `assets/` "
+            "com as imagens foi enviada ao repositório, no mesmo diretório do app.py."
+        )
 
     st.divider()
     st.caption(
